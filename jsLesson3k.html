@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+  <button id="writeBt">書く</button>
+  <p id="info"></p>
+<script>
+  document.addEventListener("DOMContentLoaded",()=>{
+    class ColorPen{
+      constructor(color,length){
+        this.color=color;
+        this.length=length;
+      }
+      write(){
+        let msg="";
+        if(this.length<=0){
+          msg="もう書けません";
+        }else{
+          this.length-=0.5;
+          msg=`${this.color}で書いた。残りの長さ${this.length}`;
+        }
+        return msg;
+      }
+    }
+
+    const pens=[new ColorPen("赤",10),new ColorPen("緑",10),new ColorPen("青",10)];
+    const body=document.querySelector("body");
+    const writeBt=document.getElementById("writeBt");
+    const info=document.getElementById("info");
+    let pen=null;
+    for(let p of pens){
+      let bt=document.createElement("button");
+      bt.textContent=`${p.color}を持つ`;
+      bt.onclick=()=>{
+        pen=p;
+        info.textContent=pen.color+"を持った";
+      };
+      body.prepend(bt);
+    }
+    writeBt.addEventListener("click",()=>{
+      let msg;
+      if(pen == null){
+        msg="ペンを持ってください!";
+      }else{
+        msg=pen.write();
+      }
+      info.textContent=msg;
+    });
+  });
+</script>
+</body>
+</html>
